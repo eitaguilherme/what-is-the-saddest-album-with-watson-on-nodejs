@@ -9,11 +9,14 @@ async function start(album, artist){
     const response = await fetch(url_getInfoAlbum);
     const data = await response.json();
 
-    console.log(`${prefix} fetched ${album} info on lastfm and returning to index`);
-    return returnTracks(data);
+    return {
+        name: album,
+        artist: artist,
+        tracks: ToTracks(data)
+    };
 }
 
-function returnTracks(data){
+function ToTracks(data){
     try {
         if(data.album.tracks){
             return data.album.tracks.track.map(track => {
